@@ -1,0 +1,193 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-crear-tipo-sexo
+      author: luis
+      sql: |
+        CREATE TYPE sexo_enum AS ENUM ('MASCULINO', 'FEMENINO', 'OTRO');
+
+  - changeSet:
+      id: 3
+      author: luis
+      changes:
+        - createTable:
+            tableName: pacientes
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: matricula
+                  type: varchar(255)
+
+              - column:
+                  name: nombre
+                  type: varchar(255)
+
+              - column:
+                  name: sexo
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: fecha_nacimiento
+                  type: timestamp
+
+              - column:
+                  name: grupo
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: semestre
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: telefono
+                  type: varchar(255)
+
+              - column:
+                  name: programa_educativo
+                  type: varchar(255)
+
+              - column:
+                  name: residencia
+                  type: varchar(255)
+
+              - column:
+                  name: religion
+                  type: varchar(255)
+
+              - column:
+                  name: escolaridad
+                  type: varchar(255)
+
+              - column:
+                  name: nss
+                  type: varchar(255)
+
+              - column:
+                  name: origen
+                  type: varchar(255)
+
+              - column:
+                  name: estado_civil
+                  type: varchar(255)
+
+              - column:
+                  name: facultad
+                  type: varchar(255)
+
+              - column:
+                  name: tipo_paciente
+                  type: varchar(255)
+
+              - column:
+                  name: curp
+                  type: varchar(255)
+
+              - column:
+                  name: email
+                  type: varchar(255)
+
+              - column:
+                  name: calle
+                  type: varchar(255)
+
+              - column:
+                  name: numero_exterior
+                  type: varchar(255)
+
+              - column:
+                  name: numero_interior
+                  type: varchar(255)
+
+              - column:
+                  name: colonia
+                  type: varchar(255)
+
+              - column:
+                  name: cp
+                  type: varchar(255)
+
+              - column:
+                  name: municipio
+                  type: varchar(255)
+
+              - column:
+                  name: entidad_federativa
+                  type: varchar(255)
+
+              - column:
+                  name: nombre_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: parentesco_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: telefono_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: calle_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: numero_exterior_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: numero_interior_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: colonia_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: cp_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: municipio_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: entidad_federativa_responsable
+                  type: varchar(255)
+
+              - column:
+                  name: numero_personal
+                  type: varchar(255)
+
+              - column:
+                  name: puesto
+                  type: varchar(255)
+
+              - column:
+                  name: tipo_contratacion
+                  type: varchar(255)
+
+              - column:
+                  name: lengua_indigena
+                  type: varchar(255)
+
+              - column:
+                  name: fecha_creacion
+                  type: timestamp
+
+              - column:
+                  name: activo
+                  type: boolean
+                  constraints:
+                    nullable: false

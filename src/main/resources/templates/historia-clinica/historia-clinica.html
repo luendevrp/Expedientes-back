@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Historia Clínica</title>
+    <link rel="stylesheet" href="historia-clinica.css" />
+</head>
+
+<body>
+
+    <div class="nota-container">
+
+        <div class="header">
+            <div class="header-left">
+                <div class="titulo-principal">HISTORIA CLÍNICA</div>
+                <div class="subtitulo">UNIVERSIDAD VERACRUZANA</div>
+                <div class="info-grid"
+                    style="grid-template-columns: 1fr 1fr; border: none; padding: 0; background: none;">
+                    <div class="field">
+                        <label>FECHA Y HORA:</label>
+                        <span th:text="${fechaHora}">16/12/2025 14:00</span>
+                    </div>
+                    <div class="field">
+                        <label>MATRÍCULA:</label>
+                        <span th:text="${paciente.matricula}">S20015783</span>
+                    </div>
+                </div>
+            </div>
+            <div class="logo-box">
+                <img src="../../assets/img/logo.png" alt="Logo UV" />
+            </div>
+        </div>
+
+        <div class="section-header">DATOS DEL PACIENTE</div>
+        <div class="info-grid">
+            <div class="field">
+                <label>NOMBRE COMPLETO:</label>
+                <span th:text="${paciente.nombre}">Juan Pérez</span>
+            </div>
+            <div class="field">
+                <label>CURP:</label>
+                <span th:text="${paciente.curp}">ABCD123456HVZ</span>
+            </div>
+            <div class="field">
+                <label>FECHA NACIMIENTO:</label>
+                <span th:text="${#dates.format(paciente.fecha_nacimiento, 'dd/MM/yyyy')}">01/01/2000</span>
+            </div>
+            <div class="field">
+                <label>SEXO:</label>
+                <span th:text="${paciente.sexo}">MASCULINO</span>
+            </div>
+            <div class="field">
+                <label>FACULTAD / DEPENDENCIA:</label>
+                <span th:text="${paciente.facultad}">Facultad de Estadística</span>
+            </div>
+            <div class="field">
+                <label>PROGRAMA EDUCATIVO:</label>
+                <span th:text="${paciente.programa_educativo}">Informática</span>
+            </div>
+            <div class="field">
+                <label>NSS:</label>
+                <span th:text="${paciente.nss}">1234567890</span>
+            </div>
+            <div class="field">
+                <label>TIPO PACIENTE:</label>
+                <span th:text="${paciente.tipo_paciente}">Estudiante</span>
+            </div>
+        </div>
+
+
+        <div class="content-wrapper">
+
+
+            <div class="main-column">
+
+                <div class="section-header">ANTECEDENTES</div>
+                <div class="field-group">
+                    <strong>Heredo-Familiares:</strong>
+                    <div class="contenido-texto" th:text="${historia.antecedentes_heredo_familiares}">(Ninguno)</div>
+                </div>
+                <div class="field-group">
+                    <strong>Patológicos:</strong>
+                    <div class="contenido-texto" th:text="${historia.antecedentes_patologicos}">(Ninguno)</div>
+                </div>
+                <div class="field-group">
+                    <strong>No Patológicos:</strong>
+                    <div class="contenido-texto" th:text="${historia.antecedentes_no_patologicos}">(Ninguno)</div>
+                </div>
+                <div class="field-group">
+                    <strong>Quirúrgicos:</strong>
+                    <div class="contenido-texto" th:text="${historia.antecedentes_quirurgicos}">(Ninguno)</div>
+                </div>
+                <div class="field-group">
+                    <strong>Medicamentos Actuales:</strong>
+                    <div class="contenido-texto" th:text="${historia.medicamentos_actuales}">(Apariencia)</div>
+                </div>
+                <div class="field-group">
+                    <strong>Alergias:</strong>
+                    <div class="contenido-texto" th:text="${historia.alergias}">(Ninguna)</div>
+                </div>
+                <div class="field-group">
+                    <strong>Gineco-Obstétricos:</strong>
+                    <div class="contenido-texto" th:text="${historia.antecedentes_gineco_obstetricos}">(N/A)</div>
+                </div>
+                <div class="field-group"
+                    th:if="${historia.cancer_prostata != null and !historia.cancer_prostata.isEmpty()}">
+                    <strong>Cáncer Próstata:</strong>
+                    <div class="contenido-texto" th:text="${historia.cancer_prostata}">(N/A)</div>
+                </div>
+                <div class="field-group">
+                    <strong>Vacunas:</strong>
+                    <div class="contenido-texto" th:text="${historia.vacunas}">(Completas)</div>
+                </div>
+                <div class="field-group">
+                    <strong>Adicciones:</strong>
+                    <div class="contenido-texto" th:text="${historia.adicciones}">(Ninguna)</div>
+                </div>
+
+                <div class="section-header">MOTIVO DE CONSULTA</div>
+                <div class="contenido-texto" th:text="${historia.motivo_consulta}">(Sin información)</div>
+
+                <div class="section-header">INTERROGATORIO</div>
+                <div class="contenido-texto" th:text="${historia.interrogatorio}">...</div>
+
+                <div class="section-header">PADECIMIENTO ACTUAL</div>
+                <div class="contenido-texto" th:text="${historia.padecimiento_actual}">...</div>
+
+                <div class="section-header">EXPLORACIÓN FÍSICA</div>
+                <div class="contenido-texto" th:text="${historia.exploracion_fisica}">(Sin hallazgos)</div>
+
+                <div class="section-header">DIAGNÓSTICO</div>
+                <div class="contenido-texto" th:text="${historia.diagnostico}">(Sin diagnóstico)</div>
+
+                <div class="section-header">TRATAMIENTO</div>
+                <div class="contenido-texto" th:text="${historia.tratamiento}">(Sin tratamiento)</div>
+
+                <div class="section-header">INDICACIONES</div>
+                <div class="contenido-texto" th:text="${historia.plan_tratamiento}">(Sin indicaciones)</div>
+
+                <div class="section-header">OBSERVACIONES</div>
+                <div class="contenido-texto" th:text="${historia.observaciones}">(Ninguna)</div>
+            </div>
+
+            <div class="sidebar-column">
+                <div class="sidebar-header">SIGNOS VITALES</div>
+
+                <div class="vital-item">
+                    <span class="vital-label">PESO (kg)</span>
+                    <span class="vital-value" th:text="${historia.peso}">70</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">TALLA (cm)</span>
+                    <span class="vital-value" th:text="${historia.talla}">175</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">IMC</span>
+                    <span class="vital-value" th:text="${historia.imc}">22.5</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">TEMP (°C)</span>
+                    <span class="vital-value" th:text="${historia.temperatura}">36.5</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">T.A. (mmHg)</span>
+                    <span class="vital-value" th:text="${historia.tension_arterial}">120/80</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">F.C. (lpm)</span>
+                    <span class="vital-value" th:text="${historia.frecuencia_cardiaca}">75</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">F.R. (rpm)</span>
+                    <span class="vital-value" th:text="${historia.frecuencia_respiratoria}">18</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">GLICEMIA</span>
+                    <span class="vital-value" th:text="${historia.glicemia}">90</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">SaO2 (%)</span>
+                    <span class="vital-value" th:text="${historia.saturacion}">98</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">HEMOGLOBINA</span>
+                    <span class="vital-value" th:text="${historia.hemoglobina}">14</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">HEMOTIPO</span>
+                    <span class="vital-value" th:text="${historia.hemotipo}">O+</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer / Firma -->
+        <div class="footer">
+            <div class="firma-box">
+                <div class="firma-linea"></div>
+                <div class="firma-texto"><strong>NOMBRE Y FIRMA DEL MÉDICO</strong></div>
+                <div class="firma-texto" th:text="${medico.nombre}">Dr. Juan Médico</div>
+                <div class="firma-texto">Céd. Prof: <span th:text="${medico.cedulaProfesional}">12345</span></div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

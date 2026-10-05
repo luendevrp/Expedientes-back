@@ -9,8 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.uv.api_expedientes.Permisos.Permiso;
-import com.uv.api_expedientes.Permisos.Roles.Rol;
+import com.uv.api_expedientes.AccessControl.Permisos.Permiso;
+import com.uv.api_expedientes.AccessControl.Roles.Rol;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,13 +36,19 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private long id;
-    @Column(nullable = false)
+    private Integer id;
     private String username;
+    private String nombre;
+    private String curp;
+    private String rfc;
+    private String cedulaProfesional;
+    private String especialidad;
+    @Column(nullable = false)
     private String password;
     private String telefono;
     private String facultad;
     private boolean activo;
+    private boolean pasante;
     private Date fecha_creacion;
 
     @ManyToOne
@@ -69,29 +75,32 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-
-        return this.username;
-    }
-
-    @Override
     public boolean isAccountNonExpired() {
-        return true;
+        // TODO Auto-generated method stub
+        return UserDetails.super.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        // TODO Auto-generated method stub
+        return UserDetails.super.isAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        // TODO Auto-generated method stub
+        return UserDetails.super.isCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        // TODO Auto-generated method stub
+        return this.activo;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
     }
 
 }

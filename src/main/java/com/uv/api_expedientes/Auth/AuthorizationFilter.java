@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+//Encargado de validar los permisos del usuario para cada solicitud
 @Component
 @RequiredArgsConstructor
 public class AuthorizationFilter extends OncePerRequestFilter {
@@ -29,8 +31,16 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain)
             throws ServletException, IOException {
+
+        // Excluir el endpoint de refresh del filtro de permisos
+        String path = request.getRequestURI();
+        if (path.startsWith("/auth/refresh")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // Obtener el token del encabezado Authorization
         String token = request.getHeader("Authorization");
@@ -71,13 +81,23 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                         parts -> parts[0].toLowerCase(),
                         Collectors.mapping(parts -> parts[1].toLowerCase(), Collectors.toList())));
 
-        List<String> accionesPermitidas = permisos.get(recurso);
+        List<String> accionesPermitidas = permisos.get(recurso.toLowerCase());
 
-        if (accionesPermitidas == null || !accionesPermitidas.contains(accion)) {
+        // System.out.println("Recurso solicitado: " + recurso.toLowerCase());
+        // System.out.println("Acción solicitada: " + accion.toLowerCase());
+        // System.out.println("Permisos del usuario: " + permisos);
+
+        if (accionesPermitidas == null || !accionesPermitidas.contains(accion.toLowerCase())) {
+            // System.out.println("Acciones permitidas para " + recurso.toLowerCase() + ": "
+            // + accionesPermitidas);
+
             response.setContentType("application/json");
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.getWriter().write(
-                    new ObjectMapper().writeValueAsString(Map.of("error", "No tienes permiso para esta acción")));
+                    new ObjectMapper().writeValueAsString(Map.of(
+                            "error", "No tienes permiso para esta acción en el recurso " + recurso,
+                            "accion_solicitada", accion,
+                            "acciones_permitidas", accionesPermitidas)));
             return;
         }
 

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Nota Médica</title>
+    <link rel="stylesheet" href="nota-medica.css" />
+</head>
+
+<body>
+
+    <div class="nota-container">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <div class="titulo-principal">NOTA MÉDICA</div>
+                <div class="subtitulo">UNIVERSIDAD VERACRUZANA</div>
+                <div class="info-grid"
+                    style="grid-template-columns: 1fr 1fr; border: none; padding: 0; background: none;">
+                    <div class="field">
+                        <label>FECHA Y HORA:</label>
+                        <span th:text="${fechaHora}">16/12/2025 14:00</span>
+                    </div>
+                    <div class="field">
+                        <label>MATRÍCULA:</label>
+                        <span th:text="${paciente.matricula}">S20015783</span>
+                    </div>
+                </div>
+            </div>
+            <div class="logo-box">
+                <img src="../../assets/img/logo.png" alt="Logo UV" />
+            </div>
+        </div>
+
+        <!-- Datos del Paciente -->
+        <div class="section-header">DATOS DEL PACIENTE</div>
+        <div class="info-grid">
+            <div class="field">
+                <label>NOMBRE COMPLETO:</label>
+                <span th:text="${paciente.nombre}">Juan Pérez</span>
+            </div>
+            <div class="field">
+                <label>CURP:</label>
+                <span th:text="${paciente.curp}">ABCD123456HVZ</span>
+            </div>
+            <div class="field">
+                <label>FECHA NACIMIENTO:</label>
+                <span th:text="${#dates.format(paciente.fecha_nacimiento, 'dd/MM/yyyy')}">01/01/2000</span>
+            </div>
+            <div class="field">
+                <label>SEXO:</label>
+                <span th:text="${paciente.sexo}">MASCULINO</span>
+            </div>
+            <div class="field">
+                <label>FACULTAD / DEPENDENCIA:</label>
+                <span th:text="${paciente.facultad}">Facultad de Estadística</span>
+            </div>
+            <div class="field">
+                <label>PROGRAMA EDUCATIVO:</label>
+                <span th:text="${paciente.programa_educativo}">Informática</span>
+            </div>
+            <div class="field">
+                <label>NSS:</label>
+                <span th:text="${paciente.nss}">1234567890</span>
+            </div>
+            <div class="field">
+                <label>TIPO PACIENTE:</label>
+                <span th:text="${paciente.tipo_paciente}">Estudiante</span>
+            </div>
+        </div>
+
+        <!-- Main Content Wrapper (Left: Note, Right: Vitals) -->
+        <div class="content-wrapper">
+
+            <!-- Left Column: Medical Note Content -->
+            <div class="main-column">
+                <div class="section-header">MOTIVO DE CONSULTA</div>
+                <div class="contenido-texto" th:text="${nota.motivo_consulta}">(Sin información)</div>
+
+                <div class="section-header">INTERROGATORIO</div>
+                <div class="contenido-texto" th:text="${nota.interrogatorio}">...</div>
+
+                <div class="section-header">PADECIMIENTO ACTUAL</div>
+                <div class="contenido-texto" th:text="${nota.padecimiento_actual}">...</div>
+
+                <div class="section-header">EXPLORACIÓN FÍSICA</div>
+                <div class="contenido-texto" th:text="${nota.exploracion_fisica}">(Sin hallazgos)</div>
+
+                <div class="section-header">DIAGNÓSTICO</div>
+                <div class="contenido-texto" th:text="${nota.diagnostico}">(Sin diagnóstico)</div>
+
+                <div class="section-header">TRATAMIENTO</div>
+                <div class="contenido-texto" th:text="${nota.tratamiento}">(Sin tratamiento)</div>
+
+                <div class="section-header">INDICACIONES</div>
+                <div class="contenido-texto" th:text="${nota.plan_tratamiento}">(Sin indicaciones)</div>
+
+                <div class="section-header">OBSERVACIONES</div>
+                <div class="contenido-texto" th:text="${nota.observaciones}">(Ninguna)</div>
+            </div>
+
+            <!-- Right Column: Vital Signs -->
+            <div class="sidebar-column">
+                <div class="sidebar-header">SIGNOS VITALES</div>
+
+                <div class="vital-item">
+                    <span class="vital-label">PESO (kg)</span>
+                    <span class="vital-value" th:text="${nota.peso}">70</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">TALLA (cm)</span>
+                    <span class="vital-value" th:text="${nota.talla}">175</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">IMC</span>
+                    <span class="vital-value" th:text="${nota.imc}">22.5</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">TEMP (°C)</span>
+                    <span class="vital-value" th:text="${nota.temperatura}">36.5</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">T.A. (mmHg)</span>
+                    <span class="vital-value" th:text="${nota.tension_arterial}">120/80</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">F.C. (lpm)</span>
+                    <span class="vital-value" th:text="${nota.frecuencia_cardiaca}">75</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">F.R. (rpm)</span>
+                    <span class="vital-value" th:text="${nota.frecuencia_respiratoria}">18</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">GLICEMIA</span>
+                    <span class="vital-value" th:text="${nota.glicemia}">90</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">SaO2 (%)</span>
+                    <span class="vital-value" th:text="${nota.saturacion}">98</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">HEMOGLOBINA</span>
+                    <span class="vital-value" th:text="${nota.hemoglobina}">14</span>
+                </div>
+                <div class="vital-item">
+                    <span class="vital-label">HEMOTIPO</span>
+                    <span class="vital-value" th:text="${nota.hemotipo}">O+</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer / Firma -->
+        <div class="footer">
+            <div class="firma-box">
+                <div class="firma-linea"></div>
+                <div class="firma-texto"><strong>NOMBRE Y FIRMA DEL MÉDICO</strong></div>
+                <div class="firma-texto" th:text="${medico.nombre}">Dr. Juan Médico</div>
+                <div class="firma-texto">Céd. Prof: <span th:text="${medico.cedulaProfesional}">12345</span></div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

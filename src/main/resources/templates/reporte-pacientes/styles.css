@@ -1,0 +1,124 @@
+@page {
+    size: A4;
+    margin: 20mm;
+
+    @bottom-center {
+        content: "Página " counter(page) " de " counter(pages);
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 10pt;
+        color: #555;
+    }
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* Header */
+.header {
+    background-color: #2980b9;
+    color: white;
+    padding: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    border-radius: 4px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+.header .subtitle {
+    margin-top: 5px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.header .logo-box {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 100px;
+    height: fit-content;
+    background-color: white;
+    border-radius: 4px;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.header .logo-box img {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+    display: inline-block;
+    /* Helps with text-align center */
+    vertical-align: middle;
+    /* Basic vertical align attempt */
+}
+
+/* Summary Section */
+.summary {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #ebf5fb;
+    border-left: 5px solid #2980b9;
+}
+
+.summary h2 {
+    margin-top: 0;
+    color: #1f618d;
+    font-size: 18px;
+}
+
+.summary p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Tables */
+.section-title {
+    color: #1f618d;
+    border-bottom: 2px solid #2980b9;
+    padding-bottom: 5px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    page-break-after: avoid;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    font-size: 12px;
+    page-break-inside: auto;
+}
+
+th {
+    background-color: #2980b9;
+    color: white;
+    padding: 8px;
+    text-align: left;
+    font-weight: bold;
+}
+
+td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #ebf5fb;
+}
+
+tr {
+    page-break-inside: avoid;
+}

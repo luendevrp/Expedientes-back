@@ -1,0 +1,92 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: luis
+      changes:
+        - createTable:
+            tableName: acciones
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nombre
+                  type: varchar(255)
+              - column:
+                  name: descripcion
+                  type: varchar(255)
+
+        - createTable:
+            tableName: recursos
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nombre
+                  type: varchar(255)
+              - column:
+                  name: descripcion
+                  type: varchar(255)
+
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nombre
+                  type: varchar(255)
+              - column:
+                  name: descripcion
+                  type: varchar(255)
+              - column:
+                  name: activo
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: fecha_creacion
+                  type: timestamp
+
+        - createTable:
+            tableName: permisos
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: rol_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_permisos_roles
+                    references: roles(id)
+              - column:
+                  name: recurso_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_permisos_recursos
+                    references: recursos(id)
+              - column:
+                  name: accion_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_permisos_acciones
+                    references: acciones(id)

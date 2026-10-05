@@ -1,0 +1,155 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: luis
+      changes:
+        - createTable:
+            tableName: historia_clinica
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: usuario_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_historia_usuarios
+                    references: usuarios(id)
+
+              - column:
+                  name: paciente_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_historia_pacientes
+                    references: pacientes(id)
+
+              - column:
+                  name: fecha_creacion
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+              # Interrogatorio y exploración
+              - column:
+                  name: motivo_consulta
+                  type: text
+
+              - column:
+                  name: interrogatorio
+                  type: text
+
+              - column:
+                  name: padecimiento_actual
+                  type: text
+
+              - column:
+                  name: exploracion_fisica
+                  type: text
+
+              # Signos vitales
+              - column:
+                  name: peso
+                  type: int
+
+              - column:
+                  name: talla
+                  type: int
+
+              - column:
+                  name: imc
+                  type: float
+
+              - column:
+                  name: tension_arterial
+                  type: varchar(20)
+
+              - column:
+                  name: frecuencia_cardiaca
+                  type: int
+
+              - column:
+                  name: frecuencia_respiratoria
+                  type: int
+
+              - column:
+                  name: temperatura
+                  type: int
+
+              - column:
+                  name: saturacion
+                  type: int
+
+              - column:
+                  name: glicemia
+                  type: int
+
+              - column:
+                  name: hemoglobina
+                  type: int
+
+              - column:
+                  name: hemotipo
+                  type: varchar(10)
+
+              # Antecedentes
+              - column:
+                  name: antecedentes_heredo_familiares
+                  type: text
+
+              - column:
+                  name: antecedentes_no_patologicos
+                  type: text
+
+              - column:
+                  name: antecedentes_patologicos
+                  type: text
+
+              - column:
+                  name: antecedentes_quirurgicos
+                  type: text
+
+              - column:
+                  name: medicamentos_actuales
+                  type: text
+
+              - column:
+                  name: alergias
+                  type: text
+
+              - column:
+                  name: antecedentes_gineco_obstetricos
+                  type: text
+
+              - column:
+                  name: cancer_prostata
+                  type: text
+
+              - column:
+                  name: vacunas
+                  type: varchar(255)
+
+              - column:
+                  name: adicciones
+                  type: varchar(255)
+
+              # Diagnóstico y tratamiento
+              - column:
+                  name: diagnostico
+                  type: text
+
+              - column:
+                  name: tratamiento
+                  type: text
+
+              - column:
+                  name: plan_tratamiento
+                  type: text
+
+              - column:
+                  name: observaciones
+                  type: text

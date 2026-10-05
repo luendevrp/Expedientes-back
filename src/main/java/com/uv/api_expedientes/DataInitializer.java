@@ -9,14 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.uv.api_expedientes.Permisos.Permiso;
-import com.uv.api_expedientes.Permisos.PermisoRepository;
-import com.uv.api_expedientes.Permisos.Acciones.Accion;
-import com.uv.api_expedientes.Permisos.Acciones.AccionRepository;
-import com.uv.api_expedientes.Permisos.Recursos.Recurso;
-import com.uv.api_expedientes.Permisos.Recursos.RecursoRepository;
-import com.uv.api_expedientes.Permisos.Roles.Rol;
-import com.uv.api_expedientes.Permisos.Roles.RolRepository;
+import com.uv.api_expedientes.AccessControl.Acciones.Accion;
+import com.uv.api_expedientes.AccessControl.Acciones.AccionRepository;
+import com.uv.api_expedientes.AccessControl.Permisos.Permiso;
+import com.uv.api_expedientes.AccessControl.Permisos.PermisoRepository;
+import com.uv.api_expedientes.AccessControl.Recursos.Recurso;
+import com.uv.api_expedientes.AccessControl.Recursos.RecursoRepository;
+import com.uv.api_expedientes.AccessControl.Roles.Rol;
+import com.uv.api_expedientes.AccessControl.Roles.RolRepository;
 import com.uv.api_expedientes.Users.User;
 import com.uv.api_expedientes.Users.UserRepository;
 
@@ -42,7 +42,7 @@ public class DataInitializer implements CommandLineRunner {
                 new Accion("Editar", "Permite editar"),
                 new Accion("Eliminar", "Permite eliminar"),
                 new Accion("Ver", "Permite ver"),
-                new Accion("Exportar", "Permite exportar a pdf"));
+                new Accion("Estadisticas", "Permite generar estadisticas"));
 
         for (Accion accion : accionesBasicas) {
             if (accionRepository.findByNombre(accion.getNombre()).isEmpty()) {
@@ -53,7 +53,7 @@ public class DataInitializer implements CommandLineRunner {
 
         // Crear Roles básicos con sus respectivas descripciones
         List<Rol> rolesBasicos = List.of(
-                new Rol(1, "superAdmin", "Tiene acceso a todo el sistema"));
+                new Rol("superAdmin", "Tiene acceso a todo el sistema"));
 
         for (Rol rol : rolesBasicos) {
             if (rolRepository.findByNombre(rol.getNombre()).isEmpty()) {
@@ -82,11 +82,16 @@ public class DataInitializer implements CommandLineRunner {
         // Crear usuario Administrador
         User usuario = User.builder()
                 .username("superAdmin")
-                .telefono("272 1234 567")
-                .facultad("negocios")
-                .password(passwordEncoder.encode("superAdmin"))
-                .fecha_creacion(new Date())
+                .nombre("Super Administrador")
+                .curp("SADMIN000000HDFRRN09")
+                .rfc("SADMIN000000")
+                .cedulaProfesional("00000000")
+                .especialidad("Administración")
+                .password(passwordEncoder.encode("SuperAdmin123$"))
+                .telefono("0000000000")
+                .facultad("Administración")
                 .activo(true)
+                .fecha_creacion(new Date())
                 .rol(rolUsuario)
                 .build();
 
@@ -103,36 +108,28 @@ public class DataInitializer implements CommandLineRunner {
         List<Recurso> todosRecursos = (ArrayList<Recurso>) recursoRepository.findAll();
         List<Accion> todasAcciones = (ArrayList<Accion>) accionRepository.findAll();
 
-        // Obtener el rol con ID 1L (Admin)
-        Optional<Rol> rolOptional = rolRepository.findById(1L);
+        for (Recurso recurso : todosRecursos) {
+            for (Accion accion : todasAcciones) {
+                Optional<Permiso> permisoExistente = permisoRepository.findByRolIdAndRecursoIdAndAccionId(
+                        rolUsuario.getId(), recurso.getId(), accion.getId());
 
-        if (rolOptional.isPresent()) {
-            Rol rol = rolOptional.get();
+                if (permisoExistente.isEmpty()) {
+                    // Crear un nuevo permiso con los objetos obtenidos
+                    Permiso nuevoPermiso = new Permiso();
+                    nuevoPermiso.setRol(rolUsuario);
+                    nuevoPermiso.setRecurso(recurso);
+                    nuevoPermiso.setAccion(accion);
 
-            for (Recurso recurso : todosRecursos) {
-                for (Accion accion : todasAcciones) {
-                    Optional<Permiso> permisoExistente = permisoRepository.findByRolIdAndRecursoIdAndAccionId(
-                            rol.getId(), recurso.getId(), accion.getId());
+                    // Guardar el nuevo permiso
+                    permisoRepository.save(nuevoPermiso);
 
-                    if (permisoExistente.isEmpty()) {
-                        // Crear un nuevo permiso con los objetos obtenidos
-                        Permiso nuevoPermiso = new Permiso();
-                        nuevoPermiso.setRol(rol);
-                        nuevoPermiso.setRecurso(recurso);
-                        nuevoPermiso.setAccion(accion);
-
-                        // Guardar el nuevo permiso
-                        permisoRepository.save(nuevoPermiso);
-
-                        System.out.println("Permiso creado para el rol super Admin: Recurso " +
-                                recurso.getNombre() +
-                                " - Acción " + accion.getNombre());
-                    }
+                    System.out.println("Permiso creado para el rol super Admin: Recurso " +
+                            recurso.getNombre() +
+                            " - Acción " + accion.getNombre());
                 }
             }
-        } else {
-            System.out.println("No se encontró el rol con ID 1.");
         }
 
     }
+
 }

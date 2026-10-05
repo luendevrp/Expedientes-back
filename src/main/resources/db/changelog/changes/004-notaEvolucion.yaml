@@ -1,0 +1,109 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: luis
+      changes:
+        - createTable:
+            tableName: notas_evolucion
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: usuario_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_notas_usuarios
+                    references: usuarios(id)
+
+              - column:
+                  name: paciente_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_notas_pacientes
+                    references: pacientes(id)
+
+              - column:
+                  name: motivo_consulta
+                  type: text
+
+              - column:
+                  name: interrogatorio
+                  type: text
+                  
+              - column:
+                  name: padecimiento_actual
+                  type: text
+
+              - column:
+                  name: exploracion_fisica
+                  type: text
+
+              - column:
+                  name: peso
+                  type: int
+
+              - column:
+                  name: talla
+                  type: int
+
+              - column:
+                  name: imc
+                  type: float
+
+              - column:
+                  name: tension_arterial
+                  type: varchar(20)
+
+              - column:
+                  name: frecuencia_cardiaca
+                  type: int
+
+              - column:
+                  name: frecuencia_respiratoria
+                  type: int
+
+              - column:
+                  name: temperatura
+                  type: int
+
+              - column:
+                  name: saturacion
+                  type: int
+
+              - column:
+                  name: glicemia
+                  type: int
+
+              - column:
+                  name: hemoglobina
+                  type: int
+                  
+              - column:
+                  name: hemotipo
+                  type: varchar(20)
+
+              - column:
+                  name: diagnostico
+                  type: text
+
+              - column:
+                  name: tratamiento
+                  type: text
+
+              - column:
+                  name: plan_tratamiento
+                  type: text
+
+              - column:
+                  name: observaciones
+                  type: text
+
+              - column:
+                  name: fecha_creacion
+                  type: timestamp

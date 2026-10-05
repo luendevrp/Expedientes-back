@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/001-access-control.yaml
+  - include:
+      file: db/changelog/changes/002-users.yaml
+  - include:
+      file: db/changelog/changes/003-patients.yaml
+  - include:
+      file: db/changelog/changes/004-notaEvolucion.yaml
+  - include:
+      file: db/changelog/changes/005-historiaClinica.yaml

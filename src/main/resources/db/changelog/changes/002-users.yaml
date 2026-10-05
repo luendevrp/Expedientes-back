@@ -1,0 +1,74 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: luis
+      changes:
+        - createTable:
+            tableName: usuarios
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: username
+                  type: varchar(255)
+
+              - column:
+                  name: nombre
+                  type: varchar(255)
+
+              - column:
+                  name: curp
+                  type: varchar(255)
+
+              - column:
+                  name: rfc
+                  type: varchar(255)
+
+              - column:
+                  name: cedula_profesional
+                  type: varchar(255)
+
+              - column:
+                  name: especialidad
+                  type: varchar(255)
+
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: telefono
+                  type: varchar(255)
+
+              - column:
+                  name: facultad
+                  type: varchar(255)
+
+              - column:
+                  name: activo
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: fecha_creacion
+                  type: timestamp
+
+              - column:
+                  name: pasante
+                  type: boolean
+                  
+              - column:
+                  name: rol_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_usuarios_roles
+                    references: roles(id)
